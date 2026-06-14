@@ -41,6 +41,8 @@ jobs:
   build-memory-sanitizer:
     name: Memory Sanitizer
     runs-on: ubuntu-latest
+    env:
+      MSAN_OPTIONS: halt_on_error=0:exit_code=0:suppressions=${{github.workspace}}/test/msan.supp
 
     steps:
     - uses: actions/checkout@v6

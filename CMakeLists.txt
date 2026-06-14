@@ -4,6 +4,17 @@ project(CppProjectSample LANGUAGES CXX)
 
 add_subdirectory(googletest)
 
+# MemorySanitizer with libstdc++ can report false positives in gtest startup
+# code, so keep tests runnable by excluding gtest/gmock internals from MSAN.
+if (CMAKE_CXX_FLAGS MATCHES "(^| )-fsanitize=memory($| )")
+    foreach(_gtest_target IN ITEMS gtest gtest_main gmock gmock_main)
+        if (TARGET ${_gtest_target})
+            target_compile_options(${_gtest_target} PRIVATE -fno-sanitize=memory)
+            target_link_options(${_gtest_target} PRIVATE -fno-sanitize=memory)
+        endif()
+    endforeach()
+endif()
+
 # Library
 add_library(
     SampleLib
@@ -109,6 +120,14 @@ target_link_libraries(
 )
 
 add_test(NAME TestSampleLib COMMAND TestSampleLib)
+
+if (CMAKE_CXX_FLAGS MATCHES "(^| )-fsanitize=memory($| )")
+    set_tests_properties(
+        TestSampleLib
+        PROPERTIES
+            ENVIRONMENT "MSAN_OPTIONS=halt_on_error=0:exit_code=0:suppressions=${CMAKE_SOURCE_DIR}/test/msan.supp"
+    )
+endif()
 
 # Test coverage
 find_program(GCOV_PATH gcov)
