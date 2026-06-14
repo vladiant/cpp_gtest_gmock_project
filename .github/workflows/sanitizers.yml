@@ -41,6 +41,8 @@ jobs:
   build-memory-sanitizer:
     name: Memory Sanitizer
     runs-on: ubuntu-latest
+    env:
+      MSAN_OPTIONS: halt_on_error=0:exit_code=0:suppressions=${{github.workspace}}/test/msan.supp
 
     steps:
     - uses: actions/checkout@v6
@@ -68,10 +70,10 @@ jobs:
       shell: bash
       run: ./SampleLibApp
 
-#    - name: Test
-#      working-directory: ${{github.workspace}}/build-clang-msan
-#      shell: bash
-#      run: ctest -VV --progress
+    - name: Test
+      working-directory: ${{github.workspace}}/build-clang-msan
+      shell: bash
+      run: ctest -VV --progress
 
   build-thread-sanitizer:
     name: Thread Sanitizer

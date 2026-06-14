@@ -1,0 +1,6 @@
+# Suppress known gtest/libstdc++ startup false positives under MemorySanitizer.
+fun:*testing::Message::Message*
+fun:*testing::internal::FlagToEnvVar*
+fun:*testing::internal::UnitTestImpl::GetTestSuite*
+fun:*testing::internal::MakeAndRegisterTestInfo*
+fun:*testing::internal::GetTypeName*

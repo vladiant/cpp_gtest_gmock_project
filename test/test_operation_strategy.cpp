@@ -8,21 +8,24 @@
 
 namespace vva {
 
-template <typename T>
-struct OperationStrategyLogic : public testing::Test {
-  using WarperType = T;
-};
+TEST(OperationStrategyLogic, GeneralOperationStrategyBasic) {
+  BasicOperationWarper warper;
 
-typedef testing::Types<BasicOperationWarper, CheckedOperationWarper,
-                       ClampedOperationWarper>
-    Warpers;
+  OperationStrategy test_strategy(warper);
 
-TYPED_TEST_SUITE(OperationStrategyLogic, Warpers);
+  EXPECT_EQ(test_strategy(6, 2), 4);
+}
 
-TYPED_TEST(OperationStrategyLogic, GeneralOperationStrategy) {
-  using WarperType = typename TestFixture::WarperType;
+TEST(OperationStrategyLogic, GeneralOperationStrategyChecked) {
+  CheckedOperationWarper warper;
 
-  WarperType warper;
+  OperationStrategy test_strategy(warper);
+
+  EXPECT_EQ(test_strategy(6, 2), 4);
+}
+
+TEST(OperationStrategyLogic, GeneralOperationStrategyClamped) {
+  ClampedOperationWarper warper;
 
   OperationStrategy test_strategy(warper);
 
