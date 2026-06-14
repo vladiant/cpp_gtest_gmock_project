@@ -43,7 +43,7 @@ jobs:
                        -export-fixes ${{github.workspace}}/clang-tidy-fixes.yaml
 
     - name: Upload Clang Tidy Result
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v7
       with:
         name: clang_tidy_fixes
         path: ${{github.workspace}}/clang-tidy-fixes.yaml
