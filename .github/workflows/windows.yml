@@ -1,6 +1,10 @@
 name: Windows CMake
 
-on: [push, workflow_dispatch]
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+  security-events: write
 
 env:
   BUILD_TYPE: Release
@@ -37,7 +41,8 @@ jobs:
 
     # Upload SARIF file to GitHub Code Scanning Alerts
     - name: Upload SARIF to GitHub
-      uses: github/codeql-action/upload-sarif@v2
+      uses: github/codeql-action/upload-sarif@v4
+      if: github.event_name == 'pull_request'
       with:
         sarif_file: ${{ steps.run-analysis.outputs.sarif }}
 
