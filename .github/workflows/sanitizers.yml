@@ -22,6 +22,7 @@ jobs:
           cmake .. \
                 -DCMAKE_C_COMPILER=/usr/bin/clang \
                 -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
+                -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
                 -DCMAKE_CXX_FLAGS="-O1 -g -fsanitize=address -fno-omit-frame-pointer"
     - name: Build
       working-directory: ${{github.workspace}}/build-clang-asan
@@ -59,6 +60,7 @@ jobs:
           cmake .. \
                 -DCMAKE_C_COMPILER=/usr/bin/clang \
                 -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
+                -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
                 -DCMAKE_CXX_FLAGS="-O1 -g -fsanitize=memory -fno-omit-frame-pointer"
     - name: Build
       working-directory: ${{github.workspace}}/build-clang-msan
@@ -94,6 +96,7 @@ jobs:
           cmake .. \
                 -DCMAKE_C_COMPILER=/usr/bin/clang \
                 -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
+                -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
                 -DCMAKE_CXX_FLAGS="-O1 -g -fsanitize=thread"
     - name: Build
       working-directory: ${{github.workspace}}/build-clang-tsan
@@ -129,6 +132,7 @@ jobs:
           cmake .. \
                 -DCMAKE_C_COMPILER=/usr/bin/clang \
                 -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
+                -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
                 -DCMAKE_CXX_FLAGS="-fsanitize=undefined"
     - name: Build
       working-directory: ${{github.workspace}}/build-clang-ubsan
