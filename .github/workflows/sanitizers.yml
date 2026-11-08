@@ -22,6 +22,7 @@ jobs:
           cmake .. \
                 -DCMAKE_C_COMPILER=/usr/bin/clang \
                 -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
+                -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
                 -DCMAKE_CXX_FLAGS="-O1 -g -fsanitize=address -fno-omit-frame-pointer"
     - name: Build
       working-directory: ${{github.workspace}}/build-clang-asan
